@@ -1,5 +1,4 @@
 import discord
-import yaml
 
 class Tethys(discord.Client):
     def __init__(self, config):
