@@ -2,12 +2,15 @@ import discord
 import yaml
 
 class Tethys(discord.Client):
-    def __init__(self):
+    def __init__(self, config):
         super().__init__()
-
-        config_file = open("config.yaml")
-        self.config = yaml.load(config_file, Loader=yaml.FullLoader)
-        config_file.close()
+        self.config = config
+    
+    def run(self, **kwargs):
+        if len(kwargs) == 0:
+            super().run(self.config["tethys_token"])
+        else:
+            super().run(self.config["tethys_token"], kwargs)
 
     async def on_ready(self):
         await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")

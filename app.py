@@ -6,8 +6,8 @@ def main():
     config = yaml.load(config_file, Loader=yaml.FullLoader)
     config_file.close()
 
-    bot = Tethys.Tethys()
-    bot.run(config["tethys_token"])
+    bot = Tethys.Tethys(config)
+    bot.run()
 
 if __name__ == "__main__":
     main()
