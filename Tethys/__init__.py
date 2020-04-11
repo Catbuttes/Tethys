@@ -18,7 +18,6 @@ class Tethys(discord.Client):
                 return channel
         return self.get_default_log_channel(guild)
 
-
     def get_edit_delete_log_channel(self, guild: discord.Guild) -> discord.TextChannel:
         """
         This gets the log channel for the specified guild's edit/delete logs
