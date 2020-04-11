@@ -1,6 +1,7 @@
 import Tethys
 import yaml
 import pathlib
+import os
 
 def main():
     config_file_path = pathlib.Path("config.yaml")
@@ -10,7 +11,8 @@ def main():
         config = yaml.load(config_file, Loader=yaml.FullLoader)
         config_file.close()
     else:
-        raise FileNotFoundError("No config found")
+        config["tethys_token"] = os.environ.get("TETHYS_TOKEN")
+        config["log_channel"] = os.environ.get("TETHYS_LOG_CHANNEL")
 
     bot = Tethys.Tethys(config)
     bot.run()
