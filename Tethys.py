@@ -1,6 +1,5 @@
 import discord
-import pickle
-
+from typing import List
 class Tethys(discord.Client):
     def __init__(self, config):
         super().__init__()
@@ -30,15 +29,15 @@ class Tethys(discord.Client):
         else:
             super().run(self.config["tethys_token"], kwargs)
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")
 
-    async def on_bulk_message_delete(self, messages):
+    async def on_bulk_message_delete(self, messages: List[discord.Message]) -> None:
         # Logging
         for message in messages:
             await self.on_message_delete(message)
 
-    async def on_message_delete(self, message):
+    async def on_message_delete(self, message: discord.Message) -> None:
         # Logging
         embed = discord.Embed(color=discord.Color.red())
         embed.title = "Deleted Message"
@@ -48,7 +47,7 @@ class Tethys(discord.Client):
         embed.add_field(name="Content", value=message.content, inline=False)
         await self.get_edit_delete_log_channel(message.guild).send(embed=embed)
     
-    async def on_message_edit(self, before, after):
+    async def on_message_edit(self, before: discord.Message, after: discord.Message) -> None:
         # Logging
         if before.content != "" and before.content is not after.content:
             embed = discord.Embed(color=discord.Color.blue())
@@ -60,7 +59,7 @@ class Tethys(discord.Client):
             embed.add_field(name="After", value=after.content, inline=False)
         await self.get_edit_delete_log_channel(before.guild).send(embed=embed)
 
-    async def on_member_remove(self, member):
+    async def on_member_remove(self, member: discord.Member) -> None:
         # Logging
         embed = discord.Embed(color=discord.Color.orange())
         embed.title = "User Left"
@@ -68,7 +67,7 @@ class Tethys(discord.Client):
         embed.add_field(name="UserId", value=member.id, inline=False)
         await self.get_join_leave_log_channel(member.guild).send(embed=embed)
     
-    async def on_member_join(self, member):
+    async def on_member_join(self, member: discord.Member) -> None:
         # Logging
         embed = discord.Embed(color=discord.Color.blue())
         embed.title = "User Joined"
