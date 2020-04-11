@@ -1,5 +1,6 @@
 import discord
 from typing import List
+
 class Tethys(discord.Client):
     def __init__(self, config):
         super().__init__()
