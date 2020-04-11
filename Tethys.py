@@ -38,7 +38,9 @@ class Tethys(discord.Client):
             super().run(self.config["tethys_token"], kwargs)
 
     async def on_ready(self) -> None:
-        await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")
+        watching = discord.Game(name="Watching you lot...")
+        await self.change_presence(activity = watching)
+       # await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")
 
     async def on_bulk_message_delete(self, messages: List[discord.Message]) -> None:
         # Logging bulk deletes (i.e when a user is banned)
