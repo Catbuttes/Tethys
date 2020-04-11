@@ -65,7 +65,7 @@ class Tethys(discord.Client):
             embed.add_field(name="Channel", value="<#%d>" % before.channel.id, inline=False)
             embed.add_field(name="Before", value=before.content, inline=False)
             embed.add_field(name="After", value=after.content, inline=False)
-        await self.get_edit_delete_log_channel(before.guild).send(embed=embed)
+            await self.get_edit_delete_log_channel(before.guild).send(embed=embed)
 
     async def on_member_remove(self, member: discord.Member) -> None:
         # Logging members leaving
