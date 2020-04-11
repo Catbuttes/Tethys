@@ -3,6 +3,7 @@ import yaml
 import pathlib
 import os
 
+
 def main():
     config_file_path = pathlib.Path("config.yaml")
     config = dict()
@@ -16,6 +17,7 @@ def main():
 
     bot = Tethys.Tethys(config)
     bot.run()
+
 
 if __name__ == "__main__":
     main()

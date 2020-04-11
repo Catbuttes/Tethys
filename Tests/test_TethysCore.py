@@ -2,17 +2,20 @@ import unittest
 import unittest.mock
 import Tethys
 
+
 class MockGuild(object):
     def __init__(self):
         self.channels = []
+
 
 class MockChannel(object):
     def __init__(self):
         self.name = ""
         self.id = -1
 
+
 class TestTethysCore(unittest.TestCase):
-    
+
     def test_getting_join_log_channel(self):
         testConfig = {"log_channel": 101}
         testTethys = Tethys.Tethys(testConfig)
@@ -48,7 +51,6 @@ class TestTethysCore(unittest.TestCase):
 
         log_channel = testTethys.get_join_leave_log_channel(mockGuild)
         self.assertTrue(log_channel.id == tc4.id)
-
 
     def test_getting_edit_log_channel(self):
         testConfig = {"log_channel": 101}
@@ -86,7 +88,6 @@ class TestTethysCore(unittest.TestCase):
         log_channel = testTethys.get_edit_delete_log_channel(mockGuild)
         self.assertTrue(log_channel.id == tc5.id)
 
-
     def test_getting_default_log_channel(self):
         testConfig = {"log_channel": 101}
         testTethys = Tethys.Tethys(testConfig)
@@ -122,7 +123,6 @@ class TestTethysCore(unittest.TestCase):
 
         log_channel = testTethys.get_default_log_channel(mockGuild)
         self.assertTrue(log_channel.id == tc6.id)
-
 
     def test_getting_fallback_log_channel(self):
         testConfig = {"log_channel": 101}
@@ -203,7 +203,6 @@ class TestTethysCore(unittest.TestCase):
         log_channel = testTethys.get_join_leave_log_channel(mockGuild)
         self.assertTrue(log_channel.id == tc6.id)
 
-    
     def test_getting_default_via_edit_log_channel(self):
         testConfig = {"log_channel": 101}
         testTethys = Tethys.Tethys(testConfig)
@@ -239,5 +238,3 @@ class TestTethysCore(unittest.TestCase):
 
         log_channel = testTethys.get_edit_delete_log_channel(mockGuild)
         self.assertTrue(log_channel.id == tc6.id)
-
-    
