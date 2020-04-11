@@ -15,3 +15,6 @@ Tethys is intended to be an open source bot. Please feel free to offer any contr
 If you do wish to develop the bot, it has a test suite using the python unittest module, which can be run using `python -m unittest`. Pull requests are welcome although it is preferred that they come with tests to prove their behaviour!
 
 Setting up your development environment is simply a case of running `pip install -r requirements.txt`. To spin up the bot, either create a config file or have the environment variables set using the sample config.yaml and .env files and then run `python3 app.py`
+
+Please ensure that all code can pass a flake8 run as these are done automatically and no pull requests will be accepted until those checks are green. The tests that it will need to pass are
+`flake8 . --count --max-complexity=10 --max-line-length=120 --statistics` and `flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics`
