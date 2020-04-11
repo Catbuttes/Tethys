@@ -6,18 +6,26 @@ class Tethys(discord.Client):
         self.config = config
 
     def get_join_leave_log_channel(self, guild: discord.Guild) -> discord.TextChannel:
+        # This gets the log channel for the specified guild's join/part logs
+        # it will fall back to the default log channel if it can't find it 
+        # using the name join-leave-logs
         for channel in guild.channels:
             if channel.name == "join-leave-logs":
                 return channel
         return self.get_default_log_channel(guild)
 
     def get_edit_delete_log_channel(self, guild: discord.Guild) -> discord.TextChannel:
+        # This gets the log channel for the specified guild's edit/delete logs
+        # it will fall back to the default log channel if it can't find it 
+        # using the name join-leave-logs
         for channel in guild.channels:
             if channel.name == "edit-delete-logs":
                 return channel
         return self.get_default_log_channel(guild)
 
     def get_default_log_channel(self, guild: discord.Guild) -> discord.TextChannel:
+        # This gets the default logging channel for the specified guild's logging
+        # It will fall back to a global log channel if it fails
         for channel in guild.channels:
             if channel.name == "tethys-logs":
                 return channel
@@ -33,12 +41,12 @@ class Tethys(discord.Client):
         await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")
 
     async def on_bulk_message_delete(self, messages: List[discord.Message]) -> None:
-        # Logging
+        # Logging bulk deletes (i.e when a user is banned)
         for message in messages:
             await self.on_message_delete(message)
 
     async def on_message_delete(self, message: discord.Message) -> None:
-        # Logging
+        # Logging deleted messages
         embed = discord.Embed(color=discord.Color.red())
         embed.title = "Deleted Message"
         embed.add_field(name="Username", value=message.author)
@@ -48,7 +56,7 @@ class Tethys(discord.Client):
         await self.get_edit_delete_log_channel(message.guild).send(embed=embed)
     
     async def on_message_edit(self, before: discord.Message, after: discord.Message) -> None:
-        # Logging
+        # Logging edited messages
         if before.content != "" and before.content is not after.content:
             embed = discord.Embed(color=discord.Color.blue())
             embed.title = "Edited Message"
@@ -60,7 +68,7 @@ class Tethys(discord.Client):
         await self.get_edit_delete_log_channel(before.guild).send(embed=embed)
 
     async def on_member_remove(self, member: discord.Member) -> None:
-        # Logging
+        # Logging members leaving
         embed = discord.Embed(color=discord.Color.orange())
         embed.title = "User Left"
         embed.add_field(name="Username", value=member)
@@ -68,7 +76,7 @@ class Tethys(discord.Client):
         await self.get_join_leave_log_channel(member.guild).send(embed=embed)
     
     async def on_member_join(self, member: discord.Member) -> None:
-        # Logging
+        # Logging members joining
         embed = discord.Embed(color=discord.Color.blue())
         embed.title = "User Joined"
         embed.add_field(name="Username", value=member)
