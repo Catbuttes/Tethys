@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment                 
+metadata:
+  name: tethys-bot           
+  namespace: tethys
+  labels:                    
+    app: tethys-bot
+spec:
+  replicas: 1                    
+  selector:
+    matchLabels:
+      app: tethys-bot        
+  template:                      
+    metadata:
+      labels:                    
+        app: tethys-bot
+    spec:                        
+      containers:
+      - name: tethys-bot
+        image: catbuttes/tethys
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: tethys-config
+        volumeMounts:
+        - name: tethys-persistent-storage
+          mountPath: /var/lib/tethys
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      volumes:
+      - name: tethys-persistent-storage
+        persistentVolumeClaim:
+          claimName: tethys-pv-claim
