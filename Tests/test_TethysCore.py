@@ -272,4 +272,5 @@ class TestTethysCore(unittest.TestCase):
 
         self.assertEqual(tc0.send_count, 2)
         self.assertIn("Tethys has just started up", tc0.send_data)
-        self.assertIn("https://discordapp.com/api/oauth2/authorize?client_id=101&permissions=0&scope=bot", tc0.send_data)
+        self.assertIn("https://discordapp.com/api/oauth2/authorize?client_id=101&permissions=0&scope=bot",
+                      tc0.send_data)
