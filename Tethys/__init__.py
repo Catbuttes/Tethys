@@ -37,7 +37,8 @@ class Tethys(discord.Client):
         for channel in guild.channels:
             if channel.name == "tethys-logs":
                 return channel
-        return self.get_channel(self.config["log_channel"])
+        else:
+            return self.get_channel(int(self.config["log_channel"]))
 
     def run(self, **kwargs):
         if len(kwargs) == 0:
@@ -46,12 +47,13 @@ class Tethys(discord.Client):
             super().run(self.config["tethys_token"], kwargs)
 
     async def on_ready(self) -> None:
-        watching = discord.Game(name="Watching you lot...")
+        watching: discord.Activity = discord.Activity(name="you lot...", type=discord.ActivityType.watching)
         await self.change_presence(activity=watching)
-        await self.get_channel(self.config["log_channel"]).send("Tethys has just started up")
-        me = await self.application_info()
-        invite = "https://discordapp.com/api/oauth2/authorize?client_id={0}&permissions=0&scope=bot".format(me.id)
-        await self.get_channel(self.config["log_channel"]).send(invite)
+        channel: discord.TextChannel = self.get_channel(int(self.config["log_channel"]))
+        await channel.send("Tethys has just started up")
+        me: discord.AppInfo = await self.application_info()
+        invite: str = "https://discordapp.com/api/oauth2/authorize?client_id={0}&permissions=0&scope=bot".format(me.id)
+        await channel.send(invite)
 
     async def on_bulk_message_delete(self, messages: List[discord.Message]) -> None:
         # Logging bulk deletes (i.e when a user is banned)
@@ -66,7 +68,8 @@ class Tethys(discord.Client):
         embed.add_field(name="UserId", value=message.author.id, inline=False)
         embed.add_field(name="Channel", value="<#%d>" % message.channel.id, inline=False)
         embed.add_field(name="Content", value=message.content, inline=False)
-        await self.get_edit_delete_log_channel(message.guild).send(embed=embed)
+        channel = await self.get_edit_delete_log_channel(message.guild)
+        await channel.send(embed=embed)
 
     async def on_message_edit(self, before: discord.Message, after: discord.Message) -> None:
         # Logging edited messages
@@ -78,7 +81,8 @@ class Tethys(discord.Client):
             embed.add_field(name="Channel", value="<#%d>" % before.channel.id, inline=False)
             embed.add_field(name="Before", value=before.content, inline=False)
             embed.add_field(name="After", value=after.content, inline=False)
-            await self.get_edit_delete_log_channel(before.guild).send(embed=embed)
+            channel = await self.get_edit_delete_log_channel(before.guild)
+            await channel.send(embed=embed)
 
     async def on_member_remove(self, member: discord.Member) -> None:
         # Logging members leaving
@@ -86,7 +90,8 @@ class Tethys(discord.Client):
         embed.title = "User Left"
         embed.add_field(name="Username", value=member)
         embed.add_field(name="UserId", value=member.id, inline=False)
-        await self.get_join_leave_log_channel(member.guild).send(embed=embed)
+        channel = await self.get_join_leave_log_channel(member.guild)
+        await channel.send(embed=embed)
 
     async def on_member_join(self, member: discord.Member) -> None:
         # Logging members joining
@@ -95,4 +100,5 @@ class Tethys(discord.Client):
         embed.add_field(name="Username", value=member)
         embed.add_field(name="UserId", value=member.id, inline=False)
         embed.set_image(url=member.avatar_url)
-        await self.get_join_leave_log_channel(member.guild).send(embed=embed)
+        channel = await self.get_join_leave_log_channel(member.guild)
+        await channel.send(embed=embed)
