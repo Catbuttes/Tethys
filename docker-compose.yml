@@ -6,3 +6,4 @@ services:
     environment: 
       - TETHYS_TOKEN
       - TETHYS_LOG_CHANNEL
+      - TETHYS_DATA

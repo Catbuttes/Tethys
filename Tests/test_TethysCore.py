@@ -32,7 +32,7 @@ class TestTethysCore(unittest.TestCase):
         self.loop.close()
 
     def test_getting_join_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         mockGuild = MockGuild()
@@ -68,7 +68,7 @@ class TestTethysCore(unittest.TestCase):
         self.assertTrue(log_channel.id == tc4.id)
 
     def test_getting_edit_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         mockGuild = MockGuild()
@@ -104,7 +104,7 @@ class TestTethysCore(unittest.TestCase):
         self.assertTrue(log_channel.id == tc5.id)
 
     def test_getting_default_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         mockGuild = MockGuild()
@@ -140,7 +140,7 @@ class TestTethysCore(unittest.TestCase):
         self.assertTrue(log_channel.id == tc6.id)
 
     def test_getting_fallback_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         tc0 = MockChannel()
@@ -183,7 +183,7 @@ class TestTethysCore(unittest.TestCase):
         testTethys.get_channel.assert_called_with(101)
 
     def test_getting_default_via_join_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         mockGuild = MockGuild()
@@ -219,7 +219,7 @@ class TestTethysCore(unittest.TestCase):
         self.assertTrue(log_channel.id == tc6.id)
 
     def test_getting_default_via_edit_log_channel(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         mockGuild = MockGuild()
@@ -255,7 +255,7 @@ class TestTethysCore(unittest.TestCase):
         self.assertTrue(log_channel.id == tc6.id)
 
     def test_on_ready(self):
-        testConfig = {"log_channel": 101}
+        testConfig = {"log_channel": 101, "data_dir": "."}
         testTethys = Tethys.Tethys(testConfig)
 
         tc0 = MockChannel()

@@ -41,6 +41,7 @@ metadata:
 data:
   TETHYS_TOKEN: "{BOT TOKEN HERE}"
   TETHYS_LOG_CHANNEL: "{MASTER LOGGING CHANNEL HERE}"
+  TETHYS_DATA: "/var/lib/tethys/"
 ---
 apiVersion: apps/v1
 kind: Deployment                 
