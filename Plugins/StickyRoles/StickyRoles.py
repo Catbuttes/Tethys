@@ -27,6 +27,7 @@ class StickyRoles(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @stickyroles.command()
+    @commands.has_guild_permissions( manage_roles=True)
     async def add(self, ctx: commands.context, role: discord.Role) -> None:
         """
         Will make the mentioned role sticky
@@ -38,6 +39,7 @@ class StickyRoles(commands.Cog):
             await ctx.channel.send("Failed to add {0} to sticky list".format(role.name))
 
     @stickyroles.command()
+    @commands.has_guild_permissions( manage_roles=True)
     async def clear(self, ctx: commands.context, role: discord.Role) -> None:
         """
         Will make the mentioned role unsticky
