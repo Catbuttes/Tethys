@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine
 
 
@@ -20,6 +20,7 @@ class AppliedRole(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, nullable=False)
     role_id = Column(Integer, ForeignKey(StickyRole.id), nullable=False)
+    role = relationship("StickyRole", foreign_keys=[role_id])
 
 
 class Store(object):
