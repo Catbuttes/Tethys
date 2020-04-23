@@ -3,7 +3,6 @@ import Tethys
 import os
 
 
-
 def main():
 
     config = dict()
